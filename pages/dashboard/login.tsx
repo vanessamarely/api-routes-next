@@ -1,22 +1,36 @@
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 
+/**
+ * @object Data
+ * @property {string} email
+ * @property {string} password
+ */
 type Data = {
   email: string;
   password: string;
 };
 
 export default function Login() {
+  // useRef hook to store form
   const ref = useRef<HTMLFormElement>(null);
+  // useRouter hook to redirect
   const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // Prevent default form submission
     event.preventDefault();
+    // Get form data
     const form = ref.current;
+
+    // Check if form exists
     if (form) {
+      // Get form data
       const formData = new FormData(form);
+      // Convert form data to object
       const data = Object.fromEntries(formData.entries());
-      console.log(data);
+
+      // Send data to API
       fetch("/api/login", {
         method: "POST",
         headers: {
@@ -26,7 +40,9 @@ export default function Login() {
       })
         .then((res) => res.json())
         .then((data) => {
+          // Store email in localStorage
           localStorage.setItem("email", data.email);
+          // Redirect to dashboard
           router.push("/dashboard");
         });
     }

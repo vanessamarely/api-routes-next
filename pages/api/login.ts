@@ -1,5 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+// NextApiRequest is a type that represents the incoming request
+// NextApiResponse is a type that represents the outgoing response
 
+/**
+ * @typedef {Object} Data
+ * @property {string} message
+ * @property {string} [email]
+ */
 type Data = {
   message: string;
   email?: string;
@@ -9,6 +16,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // req.method is a string that represents the HTTP method
   switch (req.method) {
     case "GET":
       //a get request

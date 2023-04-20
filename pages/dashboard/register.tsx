@@ -1,17 +1,24 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-type Props = {};
-
-export default function Registration({}: Props) {
+export default function Registration() {
+  // useRouter hook to redirect
   const router = useRouter();
+  // Function to handle form submission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // Prevent default form submission
     event.preventDefault();
+    // Get form data
     const form = event.currentTarget;
+    // new FromData object is created
     const formData = new FormData(form);
+    // Convert form data to object
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
+
+    //localStorage to clear the email
     localStorage.clear();
+
+    // Send data to API
     fetch("/api/register", {
       method: "POST",
       headers: {

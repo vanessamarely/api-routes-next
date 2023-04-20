@@ -1,25 +1,27 @@
 import Profile from "@/components/profile";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import useSWR from "swr";
 
-type Props = {};
-
-export default function Dashboard({}: Props) {
+export default function Dashboard() {
+  // useState hook to store email
   const [email, setEmail] = useState<string | null>(null);
+  // useState hook to show profile
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
   useEffect(() => {
     // Perform localStorage action
     const email = localStorage.getItem("email");
+    // Set email
     setEmail(email);
   }, []);
 
+    // Function to handle show profile
   const handleShowProfile = async () => {
-    console.log("Show Profile");
+    // Fetch profile data
     const data = await fetch(`/api/${email}}`);
+    // Convert data to json
     const profile = await data.json();
-    console.log(profile);
+    // Set profile data
     setShowProfile(true);
   };
 
